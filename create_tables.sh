@@ -3,11 +3,11 @@
 source ./.env
 
 #####################
-## schema creation ##
+## SCHEMA CREATION ##
 #####################
 
 schema_name="staging"
-psql -h ${PGHOST} -U ${PGUSER} -d ${PGDATABASE} -w -c "CREATE SCHEMA IF NOT EXISTS ${schema_name}"
+psql -h ${PGHOST} -U ${PGUSER} -d ${PGDATABASE}  -c "CREATE SCHEMA IF NOT EXISTS ${schema_name}"
 
 # Tables' name
 
@@ -17,9 +17,11 @@ TABLE_AGG_MIN="aggregate_min"
 TABLE_AGG_DAY="aggregate_day"
 TABLE_AGG_WEEK="aggregate_week"
 
-# Tables creation
+#####################
+## TABLES CREATION ##
+#####################
 
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_SOURCES} (
 		id bigserial NOT NULL,
 		plant_id smallint NOT NULL,
@@ -29,7 +31,7 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
 		CONSTRAINT sources_pk PRIMARY KEY (id)	
 	);"
 
- psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
+ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_MEASURES} (
 		id bigserial NOT NULL,
 		ts timestamp NOT NULL,
@@ -39,7 +41,7 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
 		value real NOT NULL
         ) PARTITION BY RANGE(ts);"
 
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_MIN} (
 		minute timestamp NOT NULL,
 		line_id smallint NOT NULL,
@@ -49,7 +51,7 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
 		stddev_value_min real
 	);"
 
- psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
+ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_DAY} (
 		day date NOT NULL,
 		line_id smallint NOT NULL,
@@ -64,7 +66,7 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
 		avg_value_day_offset real
 	);"
 
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_WEEK} (
 		week date NOT NULL,
 		line_id smallint NOT NULL,
@@ -78,8 +80,18 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -c "
 		stddev_avg_value_week real,
 		avg_value_week_offset real
 	);"
-rp=readlink -f "./index.sql"
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -f "${rp}"
 
-rp=readlink -f "./partitions.sql"
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE -w -f "${rp}"
+
+####################
+## CREATE INDEXES ##
+####################
+
+rp= readlink -f "./index.sql"
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f "${rp}"
+
+#######################
+## CREATE PARTITIONS ##
+#######################
+
+#rp= readlink -f "./partitions.sql"
+#psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f "${rp}"
