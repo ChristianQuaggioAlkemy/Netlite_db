@@ -1,7 +1,8 @@
 #!/bin/bash
 
 source ./.env
-
+PGPASSWORD="admin2022"
+export $PGPASSWORD
 #####################
 ## schema creation ##
 #####################
