@@ -86,12 +86,12 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 ## CREATE INDEXES ##
 ####################
 
-rp= readlink -f "./index.sql"
-psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f "${rp}"
+rp=$(readlink -f "./indexes.sql")
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
 
 #######################
 ## CREATE PARTITIONS ##
 #######################
 
-#rp= readlink -f "./partitions.sql"
+#rp=$(readlink -f "./partitions.sql")
 #psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f "${rp}"
