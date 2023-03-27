@@ -1,8 +1,7 @@
 #!/bin/bash
 
 source ./.env
-PGPASSWORD="admin2022"
-export $PGPASSWORD
+
 #####################
 ## schema creation ##
 #####################
@@ -38,7 +37,7 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE -c "
 		source_id smallint NOT NULL,
 		status smallint NOT NULL,
 		value real NOT NULL
-	);"
+        ) PARTITION BY RANGE(ts);"
 
 psql -h $PGHOST -U $PGUSER -d $PGDATABASE -c "
 	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_MIN} (
