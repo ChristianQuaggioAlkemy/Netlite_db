@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./.env
+export $(cat .env | xargs)
 
 #####################
 ## SCHEMA CREATION ##
