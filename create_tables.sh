@@ -93,5 +93,5 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
 ## CREATE PARTITIONS ##
 #######################
 
-#rp=$(readlink -f "./partitions.sql")
-#psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f "${rp}"
+rp=$(readlink -f "./partitions.sql")
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
