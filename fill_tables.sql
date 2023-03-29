@@ -46,8 +46,8 @@ INSERT INTO staging.aggregate_hour(hour, line_id, status, count_value_hour, avg_
 		avg(value) as avg_value_hour,
 		stddev_samp(value) as stddev_value_hour
 	FROM
-		measures m
-		JOIN sources s
+		staging.measures m
+		JOIN staging.sources s
 			ON m.source_id = s.id
 	GROUP BY 
 		hour, line_id, status
