@@ -18,6 +18,8 @@ TABLE_AGG_DAY="aggregate_day"
 TABLE_AGG_WEEK="aggregate_week"
 TABLE_AGG_MONTH="aggregate_month"
 
+names="${schema_name} ${TABLE_SOURCES} ${TABLE_MEASURES} ${TABLE_AGG_HOUR} ${TABLE_AGG_DAY} ${TABLE_AGG_WEEK} ${TABLE_AGG_MONTH}"
+
 #####################
 ## TABLES CREATION ##
 #####################
@@ -109,4 +111,11 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
 #######################
 
 rp=$(readlink -f "./partitions.sql")
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
+
+#######################
+##    FILL TABLES    ##
+#######################
+
+rp=$(readlink -f "./fill_tables.sql")
 psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -f ${rp}
