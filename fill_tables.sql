@@ -14,7 +14,7 @@ INSERT INTO staging.sources(plant_id, line_id, kind_id, name)
     		1 + (i % 5) as kind_id,
     		concat('device ', i) as name	
 	FROM
-    		generate_series(1, 40) s(i);
+    		generate_series(1, 15) s(i);
 
 /*
 ##########################################
@@ -68,7 +68,7 @@ WITH ezio as
 		sum(count_value_hour) AS count_value_day,
 		sum(count_value_hour*avg_value_hour)/sum(count_value_hour) AS avg_value_day
 	FROM
-		aggregate_hour
+		staging.aggregate_hour
 	GROUP BY 
 		day, line_id, status
 	ORDER BY 
@@ -106,7 +106,7 @@ WITH ezio as
 		sum(count_value_hour) AS count_value_week,
 		sum(count_value_hour*avg_value_hour)/sum(count_value_hour) AS avg_value_week
 	FROM
-		aggregate_hour
+		staging.aggregate_hour
 	GROUP BY 
 		week, line_id, status
 	ORDER BY 
@@ -145,7 +145,7 @@ WITH ezio as
 		sum(count_value_hour) AS count_value_month,
 		sum(count_value_hour*avg_value_hour)/sum(count_value_hour) AS avg_value_month
 	FROM
-		aggregate_hour
+		staging.aggregate_hour
 	GROUP BY 
 		month, line_id, status
 	ORDER BY 
