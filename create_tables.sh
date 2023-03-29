@@ -13,9 +13,10 @@ psql -h ${PGHOST} -U ${PGUSER} -d ${PGDATABASE}  -c "CREATE SCHEMA IF NOT EXISTS
 
 TABLE_SOURCES="sources"
 TABLE_MEASURES="measures"
-TABLE_AGG_MIN="aggregate_min"
+TABLE_AGG_HOUR="aggregate_hour"
 TABLE_AGG_DAY="aggregate_day"
 TABLE_AGG_WEEK="aggregate_week"
+TABLE_AGG_MONTH="aggregate_month"
 
 #####################
 ## TABLES CREATION ##
@@ -42,13 +43,13 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
         ) PARTITION BY RANGE(ts);"
 
 psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
-	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_MIN} (
-		minute timestamp NOT NULL,
+	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_HOUR} (
+		hour timestamp NOT NULL,
 		line_id smallint NOT NULL,
 		status smallint NOT NULL,
-		count_value_min int,
-		avg_value_min real,
-		stddev_value_min real
+		count_value_hour int,
+		avg_value_hour real,
+		stddev_value_hour real
 	);"
 
  psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
@@ -81,6 +82,20 @@ psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
 		avg_value_week_offset real
 	);"
 
+psql -h $PGHOST -U $PGUSER -d $PGDATABASE  -c "
+	CREATE TABLE IF NOT EXISTS ${schema_name}.${TABLE_AGG_MONTH} (
+		month date NOT NULL,
+		line_id smallint NOT NULL,
+		status smallint NOT NULL,
+		count_value_month int,
+		count_value_month_mean real,
+		stddev_count_value_month real,
+		count_value_month_offset real,
+		avg_value_month real,
+		avg_value_month_mean real,
+		stddev_avg_value_month real,
+		avg_value_month_offset real
+	);"
 
 ####################
 ## CREATE INDEXES ##
