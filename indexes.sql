@@ -9,7 +9,7 @@ CREATE INDEX measures_insert_ts_idx ON staging.measures (insert_ts);
 CREATE INDEX measures_source_id_idx ON staging.measures (source_id);
 CREATE INDEX measures_status_idx ON staging.measures (status);
 
-CREATE INDEX aggregate_hour_ts_idx ON staging.aggregate_hour (minute);
+CREATE INDEX aggregate_hour_ts_idx ON staging.aggregate_hour (hour);
 CREATE INDEX aggregate_hour_line_id_idx ON staging.aggregate_hour (line_id);
 CREATE INDEX aggregate_hour_status_idx ON staging.aggregate_hour (status);
 
@@ -21,7 +21,7 @@ CREATE INDEX aggregate_week_ts_idx ON staging.aggregate_week (week);
 CREATE INDEX aggregate_week_line_id_idx ON staging.aggregate_week (line_id);
 CREATE INDEX aggregate_week_status_idx ON staging.aggregate_week (status);
 
-CREATE INDEX aggregate_month_ts_idx ON staging.aggregate_month (day);
+CREATE INDEX aggregate_month_ts_idx ON staging.aggregate_month (month);
 CREATE INDEX aggregate_month_line_id_idx ON staging.aggregate_month (line_id);
 CREATE INDEX aggregate_month_status_idx ON staging.aggregate_month (status);
 

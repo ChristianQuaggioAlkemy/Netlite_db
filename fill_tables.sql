@@ -5,6 +5,8 @@
 ##########################################
 */
 
+CREATE EXTENSION IF NOT EXISTS tablefunc;
+
 INSERT INTO staging.sources(plant_id, line_id, kind_id, name)
 	SELECT
     		1 as plant_id,
