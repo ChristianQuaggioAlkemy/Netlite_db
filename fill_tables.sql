@@ -29,7 +29,7 @@ INSERT INTO staging.measures(ts, source_id, status, value)
 		(random() * 5)::int as status,
 		value
 	FROM
-		normal_rand(1000 * 1000 * 5, 250, 10) s(value);
+		normal_rand(1000 * 1000 * 1.5, 250, 10) s(value);
 /*
 ##########################################
 ############ FILL AGGREGATES #############
